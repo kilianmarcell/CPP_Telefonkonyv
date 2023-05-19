@@ -1,0 +1,106 @@
+- Osztályok: -
+
+String //Karaktersorozatok kezeléséhez
+   adattagok:
+	char* szoveg; //A karaktersorozat itt tárolódik
+	size_t hossz; //A karaktersorozat hossza (\0-t nem számoljuk bele)
+   metódusok:
+	String() //Egy üres karaktersorozatot hozunk létre
+	String(const char* str) //Egy bejövő karaktersorozatot eltárolunk
+	String(const String& str) //Egy másik String-ből másolunk
+	~String() //Felszabadítja a lefoglalt szoveg-et
+	const char* getString() const //Visszaadja a szoveg kezdő pointerét
+	size_t getHossz() //Visszaadja a String hossz értékét
+	String& operator=(const String& str) //Lemásolja a String-et
+	bool operator==(const char* str) const //Megvizsgálja, hogy a Stringek szoveg adatai megegyeznek-e bejövő szöveges paraméterrel
+	bool operator==(const String& str) const //Megvizsgálja, hogy a Stringek szoveg adatai megegyeznek-e bejövő String paraméterrel
+	char& operator[](size_t index) //Visszaadja az indexedik elemét a karaktertömbnek
+	const char& operator[](size_t index) const //Visszaadja az indexedik elemét a karaktertömbnek (const)
+	bool vanESzam() //Megmondja, hogy szerepel-e szám a String-ben
+	bool lehetETelefonszam() //Megmondja, hogy telefonszám lehet-e a String
+	std::ostream& operator<<(std::ostream& os, const String& str) //Kiírásoknál a szoveget kell megjeleníteni
+
+StringPar //Egy extra adat megnevezését és értékét tároljuk itt
+   adattagok:
+	String nev //A további adat megnevezése
+	String adat //A további adat értéke
+   metódusok:
+	StringPar() //Egy üres nevet és adat párt hoz létre
+	StringPar(String _nev, String _adat) //Egy _nev nevet és _adat adatot hoz létre
+	String getNev() //Visszaadja a nevét az extra adatnak
+	String getAdat() //Visszaadja az értékét az extra adatnak
+	void setNev(String _nev) //Beállíthatunk egy új értéket a névnek
+	void setAdat(String _adat) //Beállíthatunk egy új értéket az adatnak
+	bool operator==(String _adat) //Megmondja, hogy megegyeik-e a két adat érték
+
+Vektor //Dinamikus memóriakezeléshez használjuk
+   adattagok:
+	T* adatok //Egy T tömböt tárol
+	size_t elemekSzama //A T tömb elemszámát tárolja
+   metódusok:
+	Vektor() //Létrehoz egy üres tömböt, 0 elemszámmal
+	size_t getElemekSzama() //Az elemek számát adja vissza
+	void add(const T& adat) //Egy T elemet adhatunk a tömbünkhöz
+	void remove(size_t index) //Egy elemet töröl a tömbünkből
+	T& operator[](size_t index) //A tömb egyik elemével tér vissza
+	const T& operator[](size_t index) const //A tömb egyik elemével tér vissza (const)
+	~Vektor() //Felszabadítja a dinamikusan foglalt adatok memóriát
+
+Telefonszam //telefonszámok létrehozásához
+   adattagok:
+	String telefonszam; //A telefonszámot tároljuk itt
+   metódusok:
+	Telefonszam() //Egy üres Telefonszam-ot hoz létre
+	Telefonszam(String _telefonszam) //Egy telefonszámot hoz létre a bejövő String paraméterrel
+	String getTelefonszam() //Visszaadja a telefonszámot
+	void setTelefonszam(String _telefonszam) //A telefonszámnak egy új értéket lehet beállítani, figyelni kell, hogy egyedi maradjon a telefonszám
+	Telefonszam& operator=(Telefonszam& _telefonszam) //Lehet, hogy félreírtunk egy telefonszámot, a javításához kell
+
+Ember //Ember adatainak tárolásához
+   adattagok:
+	String nev //Az ember nevét tárolja
+	String becenev //Becenevét
+	String cim //Címét
+	Vektor<StringPar> masAdatok //Az egyéb adatokat, amiket hozzáadtunk itt tároljuk
+   metódusok:
+	Ember() //A sima konstruktor egyesével bekéri a felhasználótól az Ember paramétereit, az alapvető adatokat ki kell tölteni, az adatokat egyesével a set metódusok segítségével állítjuk majd be
+	String getNev() //Az ember nevét adja vissza
+	String getBecenev() //Az ember becenevét adja vissza
+	String getCim() //Az ember címét adja vissza
+	virtual String getEmberTelefonszam() = 0 //Mindegyik származtatott osztálynak tudnunk kell majd a telefonszámát
+	size_t getMasAdatokElemszama() //Az ember egyéb adatinak elemszámát adja vissza
+	StringPar getMasAdatokAdata(size_t index) //Az ember egyéb adatinak indexedik elemét adja vissza
+	void setNev(String _nev) //Az ember nevét módosítja
+	void setBecenev(String _becenev) //Az ember becenevét módosítja
+	void setCim(String _cim) //Az ember címét módosítja
+	virtual void setEmberTelefonszam(Telefonszam _telefonszam) = 0; //Módosíthatjuk a származtatott osztályok telefonszámát
+	void addMasAdatok(StringPar sp) //Az ember egyéb adati közül az indexedik elemét adja vissza
+	void setMasAdatok(size_t index, String adat) //Az ember egyéb adati közül az indexedik elemét adja vissza
+	void removeMasAdatok(size_t index) //Az ember egyéb adatinak indexedik elemét eltávolítja
+	void kiir() //Az ember adatait egymás alá kiírja, minden sorban megjelenítjük, hogy az ember melyik adattagja jelenik meg abban a sorban
+	std::ostream& operator<<(std::ostream& os, Ember& ember) //Kiírja az ember adatait egymás mellé
+
+Dolgozo : public Ember //Egy olyan ember adatait tárolja, akinek csak munkahelyi telefonszáma van
+   adattagok:
+	Telefonszam munkahelyiSzam //Egy ember céges telefonszámát
+   metódusok:
+	Dolgozo() :Ember() //Létrehoz egy üres Dolgozo-t
+	String getEmberTelefonszam() override //Az ember céges telefonszámát adja vissza
+	void setEmberTelefonszam(Telefonszam _telefonszam) override //Az ember céges telefonszámát adja vissza
+
+Maganember : public Ember //Egy olyan ember adatait tárolja, akinek csak munkahelyi telefonszáma van
+   adattagok:
+	Telefonszam privatSzam //Egy ember céges telefonszámát
+   metódusok:
+	Maganember() :Ember() //Létrehoz egy üres Maganember-t
+	String getEmberTelefonszam() override //Az ember magán telefonszámát adja vissza
+	void setEmberTelefonszam(Telefonszam _telefonszam) override //Az ember magán telefonszámát adja vissza
+
+Telefonkonyv //Telefonkönyvek létrehozásához
+   adattagok:
+	Vektor<Ember*> emberek; //Ember tömbből áll a telefonkönyv, az emberek adatait tárolja, az Ember-ek felszabadítására az osztályon belül figyelünk
+   metódusok:
+	Telefonkonyv() //Létrehoz egy üres telefonkönyvet, nincs benne egy Ember sem
+	Ember* getEmber(const String& nev) //Visszatér a nev nevű ember objektum pointerével
+	void addEmber(Ember* ember) //A telefonkönyvhöz egy ember-t adunk hozzá
+	void kiir() //Kiírja az összes ember adatait, az első sorba az adattípusok szerepelnek
