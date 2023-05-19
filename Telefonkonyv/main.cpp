@@ -97,6 +97,7 @@ void telefonkonyv_muveletek(Telefonkonyv t) {
 		break;
 	case 4:
 		ember_keresese(t);
+		telefonkonyv_muveletek(t);
 		break;
 	case 5:
 		adat_felvetele(t);
@@ -240,13 +241,13 @@ void maganember_hozzaadasa(Telefonkonyv t) {
 
 void ember_eltavolitasa(Telefonkonyv t) {
 	system("CLS");
-	if (t.getEmberekSzama() == 0) {
+	size_t darab = t.getEmberekSzama();
+	if (darab == 0) {
 		std::cout << "A telefonkönyv üres!" << std::endl;
 		system("pause");
 	} else {
 		std::cout << "1 - Vissza a menübe" << std::endl;
 		std::cout << "Adja meg az ember nevét, akit el szeretne távolítani a telefonkönyvbõl!" << std::endl;
-		size_t darab = t.getEmberekSzama();
 		char* beolvas = new char[0];
 		std::cout << "Az ember neve: ";
 		std::cin >> beolvas;
@@ -282,18 +283,48 @@ void adat_felvetele(Telefonkonyv t) {
 	char* beolvas = new char[0];
 	StringPar sp = StringPar();
 	std::cin >> beolvas;
-	sp.setNev(beolvas);
+	if (String(beolvas) == "1") {}
+	else { sp.setNev(beolvas); }
 
 	//Ember::addMasAdatok(sp); -> TODO...
 
 	telefonkonyv_muveletek(t);
 }
 
+
+
+
+
+
+
+
+//TODO -> bugfix
 void ember_keresese(Telefonkonyv t) {
 	system("CLS");
-	std::cout << "1 - Vissza a menübe" << std::endl;
-	std::cout << "Adja meg az ember nevét, akit ki szeretne írni a telefonkönyvbõl!" << std::endl;
-	telefonkonyv_muveletek(t);
+	size_t darab = t.getEmberekSzama();
+	if (darab == 0) {
+		std::cout << "A telefonkönyv üres!" << std::endl;
+		system("pause");
+	}
+	else {
+		std::cout << "1 - Vissza a menübe" << std::endl;
+		std::cout << "Adja meg az ember nevét, akit ki szeretne írni a telefonkönyvbõl!" << std::endl;
+		char* beolvas = new char[0];
+		std::cout << "Az ember neve: ";
+		std::cin >> beolvas;
+		while (t.getEmber(beolvas)->getNev().getString() == "") {
+			if (beolvas == "1") {
+				return;
+			} else {
+				std::cout << "Nincs ilyen nevû ember a telefonkönyvben!" << std::endl;
+				std::cout << "A telefonkönyvbõl egy ember neve: ";
+				std::cin >> beolvas;
+			}
+		}
+		std::cout << beolvas << " adatai:\n" << std::endl;
+		std::cout << t.getEmber(beolvas)->getNev() << std::endl;
+		system("pause");
+	}
 }
 
 int main() {
