@@ -97,7 +97,6 @@ void telefonkonyv_muveletek(Telefonkonyv t) {
 		break;
 	case 4:
 		ember_keresese(t);
-		telefonkonyv_muveletek(t);
 		break;
 	case 5:
 		adat_felvetele(t);
@@ -312,8 +311,9 @@ void ember_keresese(Telefonkonyv t) {
 		char* beolvas = new char[0];
 		std::cout << "Az ember neve: ";
 		std::cin >> beolvas;
-		while (t.getEmber(beolvas)->getNev().getString() == "") {
-			if (beolvas == "1") {
+		while(t.getEmber(beolvas) == nullptr) {
+			if(String(beolvas) == "1") {
+				telefonkonyv_muveletek(t);
 				return;
 			} else {
 				std::cout << "Nincs ilyen nevû ember a telefonkönyvben!" << std::endl;
@@ -321,10 +321,12 @@ void ember_keresese(Telefonkonyv t) {
 				std::cin >> beolvas;
 			}
 		}
-		std::cout << beolvas << " adatai:\n" << std::endl;
-		std::cout << t.getEmber(beolvas)->getNev() << std::endl;
-		system("pause");
+		if(darab > 0) {
+			t.getEmber(beolvas)->kiir();
+			system("pause");
+		}
 	}
+	telefonkonyv_muveletek(t);
 }
 
 int main() {
