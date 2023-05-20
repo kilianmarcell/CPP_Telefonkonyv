@@ -10,6 +10,7 @@ public:
 	Maganember() :Ember() {} //Létrehoz egy üres Maganember-t
 	String getEmberTelefonszam() override { return privatSzam.getTelefonszam(); } //Az ember magán telefonszámát adja vissza
 	void setEmberTelefonszam(Telefonszam _telefonszam) override { privatSzam = _telefonszam; } //Az ember magán telefonszámát adja vissza
+	String getTipus() { return String("Maganember"); } //Megadja, hogy a páldány magánember
 };
 
 #endif //MAGANEMBER_H

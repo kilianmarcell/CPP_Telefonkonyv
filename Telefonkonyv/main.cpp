@@ -46,6 +46,7 @@ void telefonkonyv_mentes(Telefonkonyv t) {
 			for(size_t i = 0; i < t.getEgyebAdatokSzama(); i++) fajl << '\t' << t.getEgyebAdatok(i)->getString();
 			fajl << '\n';
 			for(size_t i = 0; i < t.getEmberekSzama(); i++) {
+				fajl << t.getEmber(i)->getTipus() << '\t';
 				fajl << t.getEmber(i)->getNev() << '\t' << t.getEmber(i)->getBecenev() << '\t' << t.getEmber(i)->getCim() << '\t' << t.getEmber(i)->getEmberTelefonszam();
 				for(size_t j = 0; j < t.getEgyebAdatokSzama(); j++) {
 					size_t szamol = 0;
@@ -89,21 +90,37 @@ Telefonkonyv telefonkonyv_betolt() {
 	size_t sor = 0;
 	size_t adat = 0;
 	while (fajl >> std::noskipws >> karakter) {
-		if (karakter != '\t') {
-			szo += karakter;
-		}
-		if (karakter == '\t' && sor == 0) {
-			adat++;
-			if (sor == 0 && adat > 3) {
-				String* egyebAdat = new String(szo);
-				t.addEgyebAdat(egyebAdat);
+		if (sor == 0) {
+			if (karakter != '\t' && karakter != '\n') {
+				szo += karakter;
 			}
-			szo = "";
+			if (karakter == '\t' || karakter == '\n') {
+				adat++;
+				if (sor == 0 && adat > 4) {
+					String* egyebAdat = new String(szo);
+					t.addEgyebAdat(egyebAdat);
+				}
+				szo = "";
+			}
+			if (karakter == '\n') {
+				sor = 1;
+				adat = 0;
+			}
+		} else {
+			if (karakter != '\t' && karakter != '\n') {
+				szo += karakter;
+			}
+			if (karakter == '\t' || karakter == '\n') {
+				adat++;
+				if (sor == 0 && adat > 4) {
+					String* egyebAdat = new String(szo);
+					t.addEgyebAdat(egyebAdat);
+				}
+				szo = "";
+			}
+			if (karakter == '\n') adat = 0;
 		}
 	}
-	/*while (fajl >> szo) {
-		std::cout << szo << std::endl;
-	}*/
 	std::cout << "A fájl sikeresen beolvasva!" << std::endl;
 	system("pause");
 	return t;

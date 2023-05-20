@@ -10,6 +10,7 @@ public:
 	Dolgozo() :Ember() {} //Létrehoz egy üres Dolgozo-t
 	String getEmberTelefonszam() override { return munkahelyiSzam.getTelefonszam(); } //Az ember céges telefonszámát adja vissza
 	void setEmberTelefonszam(Telefonszam _telefonszam) override { munkahelyiSzam = _telefonszam; } //Az ember céges telefonszámát adja vissza
+	String getTipus() { return String("Dolgozo"); } //Megadja, hogy a páldány dolgozó
 };
 
 #endif //DOLGOZO_H
