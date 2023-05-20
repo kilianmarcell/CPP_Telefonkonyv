@@ -57,7 +57,7 @@ void telefonkonyv_mentes(Telefonkonyv t) {
 					}
 					if(szamol == 0) fajl << '\t';
 				}
-				fajl << std::endl;
+				if(i < t.getEmberekSzama() - 1) fajl << std::endl;
 			}
 			fajl.close();
 		} else { std::cout << "Probléma a fájlba mentéssel!" << std::endl; }
@@ -179,22 +179,22 @@ void dolgozo_hozzaadasa(Telefonkonyv t) {
 
 	system("CLS");
 	std::cout << "Az ember neve: ";
-	std::cin >> beolvas;
-	size_t vanEIlyenNevuEmber = 1;
-	while (beolvas.vanESzam() == true && vanEIlyenNevuEmber == 0) {
-		size_t seged = 0;
-		for (size_t i = 0; i < t.getEmberekSzama(); i++) {
-			if (t.getEmber(i)->getNev() == beolvas) {
-				vanEIlyenNevuEmber = 1;
-				seged = 1;
+	size_t lehetEIlyenNev = 0;
+	while (lehetEIlyenNev == 0) {
+		std::cin >> beolvas;
+		if (!beolvas.vanESzam()) {
+			size_t seged = 0;
+			for (size_t i = 0; i < t.getEmberekSzama(); i++) {
+				if (t.getEmber(i)->getNev() == beolvas) {
+					lehetEIlyenNev = 0;
+					seged = 1;
+				}
 			}
-		}
-		if (seged == 0) vanEIlyenNevuEmber = 0;
-		else if(seged == 1) std::cout << "Van már ilyen nevû ember a telefonkönyvben!" << std::endl;
-		if(beolvas.vanESzam()) std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl;
+			if (seged == 0) lehetEIlyenNev = 1;
+			else if (seged == 1) std::cout << "Van már ilyen nevû ember a telefonkönyvben!" << std::endl;
+		} else { std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl; lehetEIlyenNev = 0; }
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
-		std::cin >> beolvas;
 	}
 	d->setNev(beolvas);
 
@@ -258,12 +258,23 @@ void maganember_hozzaadasa(Telefonkonyv t) {
 
 	system("CLS");
 	std::cout << "Az ember neve: ";
-	std::cin >> beolvas;
-	while (beolvas.vanESzam()) {
-		std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl;
+	size_t lehetEIlyenNev = 0;
+	while (lehetEIlyenNev == 0) {
+		std::cin >> beolvas;
+		if (!beolvas.vanESzam()) {
+			size_t seged = 0;
+			for (size_t i = 0; i < t.getEmberekSzama(); i++) {
+				if (t.getEmber(i)->getNev() == beolvas) {
+					lehetEIlyenNev = 0;
+					seged = 1;
+				}
+			}
+			if (seged == 0) lehetEIlyenNev = 1;
+			else if (seged == 1) std::cout << "Van már ilyen nevû ember a telefonkönyvben!" << std::endl;
+		}
+		else { std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl; lehetEIlyenNev = 0; }
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
-		std::cin >> beolvas;
 	}
 	m->setNev(beolvas);
 
@@ -386,13 +397,24 @@ void ember_modositasa(Telefonkonyv t) {
 
 			system("CLS");
 			std::cout << regi_nev << " új neve: ";
-			std::cin >> beolvas;
+			size_t lehetEIlyenNev = 0;
 			if (beolvas == "-") seged = 1;
-			while (beolvas.vanESzam() && seged == 0) {
-				std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl;
+			while (lehetEIlyenNev == 0 && seged == 0) {
+				std::cin >> beolvas;
+				if (!beolvas.vanESzam()) {
+					size_t seged = 0;
+					for (size_t i = 0; i < t.getEmberekSzama(); i++) {
+						if (t.getEmber(i)->getNev() == beolvas) {
+							lehetEIlyenNev = 0;
+							seged = 1;
+						}
+					}
+					if (seged == 0) lehetEIlyenNev = 1;
+					else if (seged == 1) std::cout << "Van már ilyen nevû ember a telefonkönyvben!" << std::endl;
+				}
+				else { std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl; lehetEIlyenNev = 0; }
 				std::cin.clear();
 				std::cin.ignore(1000, '\n');
-				std::cin >> beolvas;
 			}
 			if (seged == 0) { e->setNev(beolvas); }
 
