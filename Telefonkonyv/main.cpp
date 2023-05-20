@@ -58,7 +58,7 @@ void telefonkonyv_mentes(Telefonkonyv t) {
 					}
 					if(szamol == 0) fajl << '\t';
 				}
-				if(i < t.getEmberekSzama() - 1) fajl << std::endl;
+				fajl << std::endl;
 			}
 			fajl.close();
 		} else { std::cout << "Probléma a fájlba mentéssel!" << std::endl; }
@@ -112,7 +112,7 @@ Telefonkonyv telefonkonyv_betolt() {
 			}
 			if (karakter == '\t' || karakter == '\n') {
 				adat++;
-				if (karakter == '\t' && adat == 1) {
+				if (adat == 1) {
 					if (szo == "Dolgozo") {
 						Dolgozo* d = new Dolgozo();
 						t.addEmber(d);
@@ -121,11 +121,11 @@ Telefonkonyv telefonkonyv_betolt() {
 						Maganember* m = new Maganember();
 						t.addEmber(m);
 					}
-				} else if (karakter == '\t' && adat == 2) t.getEmber(sor)->setNev(szo);
-				else if (karakter == '\t' && adat == 3) t.getEmber(sor)->setBecenev(szo);
-				else if (karakter == '\t' && adat == 4) t.getEmber(sor)->setCim(szo);
-				else if (karakter == '\t' && adat == 5) t.getEmber(sor)->setEmberTelefonszam(Telefonszam(szo));
-				else if (karakter == '\t' && adat > 5) {
+				} else if (adat == 2) t.getEmber(sor)->setNev(szo);
+				else if (adat == 3) t.getEmber(sor)->setBecenev(szo);
+				else if (adat == 4) t.getEmber(sor)->setCim(szo);
+				else if (adat == 5) t.getEmber(sor)->setEmberTelefonszam(Telefonszam(szo));
+				else if (adat > 5) {
 					StringPar sp = StringPar(t.getEgyebAdatok((adat - 6))->getString(), szo);
 					t.getEmber(sor)->addMasAdatok(sp);
 				}
@@ -462,10 +462,10 @@ void ember_modositasa(Telefonkonyv t) {
 			system("CLS");
 			std::cout << regi_nev << " új neve: ";
 			size_t lehetEIlyenNev = 0;
-			if (beolvas == "-") seged = 1;
 			while (lehetEIlyenNev == 0 && seged == 0) {
 				std::cin >> beolvas;
-				if (!beolvas.vanESzam()) {
+				if (beolvas == "-") seged = 1;
+				if (!beolvas.vanESzam() && seged == 0) {
 					size_t seged = 0;
 					for (size_t i = 0; i < t.getEmberekSzama(); i++) {
 						if (t.getEmber(i)->getNev() == beolvas) {
@@ -476,7 +476,7 @@ void ember_modositasa(Telefonkonyv t) {
 					if (seged == 0) lehetEIlyenNev = 1;
 					else if (seged == 1) std::cout << "Van már ilyen nevû ember a telefonkönyvben!" << std::endl;
 				}
-				else { std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl; lehetEIlyenNev = 0; }
+				else if (beolvas.vanESzam()) { std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl; lehetEIlyenNev = 0; }
 				std::cin.clear();
 				std::cin.ignore(1000, '\n');
 			}
