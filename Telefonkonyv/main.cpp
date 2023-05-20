@@ -75,6 +75,37 @@ void telefonkonyv_mentes(Telefonkonyv t) {
 Telefonkonyv telefonkonyv_betolt() {
 	Telefonkonyv t = Telefonkonyv();
 	std::cout << "Telefonkönyv betöltése, kérem adja meg az elmentett telefonkönyv nevét!" << std::endl;
+	std::cout << "Telefonkönyv neve: ";
+	String beolvas = String();
+	std::cin >> beolvas;
+	beolvas += '.';
+	beolvas += 't';
+	beolvas += 'x';
+	beolvas += 't';
+
+	char karakter = ' ';
+	std::fstream fajl(beolvas.getString(), std::fstream::in);
+	String szo = String("");
+	size_t sor = 0;
+	size_t adat = 0;
+	while (fajl >> std::noskipws >> karakter) {
+		if (karakter != '\t') {
+			szo += karakter;
+		}
+		if (karakter == '\t' && sor == 0) {
+			adat++;
+			if (sor == 0 && adat > 3) {
+				String* egyebAdat = new String(szo);
+				t.addEgyebAdat(egyebAdat);
+			}
+			szo = "";
+		}
+	}
+	/*while (fajl >> szo) {
+		std::cout << szo << std::endl;
+	}*/
+	std::cout << "A fájl sikeresen beolvasva!" << std::endl;
+	system("pause");
 	return t;
 }
 

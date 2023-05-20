@@ -83,11 +83,23 @@ void teszt() {
 		EXPECT_STREQ("Teszt", a.str().c_str());
 	} END
 
-	TEST(String, Operator+) {
+	TEST(String, Operator=) {
+		String s = String("Teszt");
+		s = "";
+		EXPECT_STREQ("", s.getString());
+		s = String("EzEgyTeszt");
+		EXPECT_STREQ("EzEgyTeszt", s.getString());
+		s = String();
+		EXPECT_STREQ("", s.getString());
+	} END
+
+	TEST(String, Operator+=) {
 		String s = String("Teszt");
 		s += 'd';
 		s += '3';
-		EXPECT_STREQ("Tesztd3", s.getString());
+		char c = 'k';
+		s += c;
+		EXPECT_STREQ("Tesztd3k", s.getString());
 	} END
 
 	//StringPar tesztek
