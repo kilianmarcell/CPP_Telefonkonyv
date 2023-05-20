@@ -271,9 +271,87 @@ void ember_eltavolitasa(Telefonkonyv t) {
 
 void ember_modositasa(Telefonkonyv t) {
 	system("CLS");
+	size_t darab = t.getEmberekSzama();
+	if (darab == 0) {
+		std::cout << "A telefonkönyv üres, nincs lehetõség ember adatainak módosítására!" << std::endl;
+		system("pause");
+	}
+	else {
+		std::cout << "1 - Vissza a menübe" << std::endl;
+		std::cout << "Adja meg az ember nevét, akinek az adatait módosítani szeretné a telefonkönyvbõl!" << std::endl;
+		char* beolvas = new char[0];
+		std::cout << "Az ember neve: ";
+		std::cin >> beolvas;
+		while (t.getEmber(beolvas) == nullptr) {
+			if (String(beolvas) == "1") {
+				telefonkonyv_muveletek(t);
+				return;
+			}
+			else {
+				std::cout << "Nincs ilyen nevû ember a telefonkönyvben!" << std::endl;
+				std::cout << "A telefonkönyvbõl egy ember neve: ";
+				std::cin >> beolvas;
+			}
+		}
+		if (darab > 0) {
+			String regi_nev = String(beolvas);
+			regi_nev = beolvas;
+			Ember* e = t.getEmber(beolvas);
+
+			system("CLS");
+			std::cout << regi_nev  << " új neve: ";
+			std::cin >> beolvas;
+			while (String(beolvas).vanESzam()) {
+				std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl;
+				std::cin.clear();
+				std::cin.ignore(1000, '\n');
+				std::cin >> beolvas;
+			}
+			e->setNev(beolvas);
+
+			system("CLS");
+			std::cout << regi_nev << " új beceneve: ";
+			std::cin >> beolvas;
+			while (String(beolvas).vanESzam()) {
+				std::cout << "Az ember becenevében nem szerepelhet szám karakter!" << std::endl;
+				std::cin.clear();
+				std::cin.ignore(1000, '\n');
+				std::cin >> beolvas;
+			}
+			e->setBecenev(beolvas);
+
+			system("CLS");
+			std::cout << regi_nev << " új címe: ";
+			std::cin >> beolvas;
+			while (!String(beolvas).vanESzam()) {
+				std::cout << "Az ember címében szerepelnie kell szám karakternek!" << std::endl;
+				std::cin.clear();
+				std::cin.ignore(1000, '\n');
+				std::cin >> beolvas;
+			}
+			e->setCim(beolvas);
+
+			system("CLS");
+			std::cout << regi_nev << " új telefonszáma: ";
+			std::cin >> beolvas;
+			while (!String(beolvas).lehetETelefonszam()) {
+				std::cout << "Az ember telefonszámában csak szám karakterek és a + karakter szerepelhetnek!" << std::endl;
+				std::cin.clear();
+				std::cin.ignore(1000, '\n');
+				std::cin >> beolvas;
+			}
+			e->setEmberTelefonszam(Telefonszam(beolvas));
+
+			system("CLS");
+			std::cout << regi_nev << " új adatai:" << std::endl;
+			e->kiir();
+			system("pause");
+		}
+	}
 	telefonkonyv_muveletek(t);
 }
 
+//TODO: befejezni
 void adat_felvetele(Telefonkonyv t) {
 	system("CLS");
 	std::cout << "1 - Vissza a menübe" << std::endl;
@@ -290,19 +368,11 @@ void adat_felvetele(Telefonkonyv t) {
 	telefonkonyv_muveletek(t);
 }
 
-
-
-
-
-
-
-
-//TODO -> bugfix
 void ember_keresese(Telefonkonyv t) {
 	system("CLS");
 	size_t darab = t.getEmberekSzama();
 	if (darab == 0) {
-		std::cout << "A telefonkönyv üres!" << std::endl;
+		std::cout << "A telefonkönyv üres, nincs lehetõség embert keresni a telefonkönyvben!" << std::endl;
 		system("pause");
 	}
 	else {
