@@ -174,13 +174,30 @@ void dolgozo_hozzaadasa(Telefonkonyv t) {
 	system("CLS");
 	std::cout << "Az ember telefonszáma: ";
 	std::cin >> beolvas;
-	while (!String(beolvas).lehetETelefonszam()) {
+	while(!String(beolvas).lehetETelefonszam()) {
 		std::cout << "Az ember telefonszámában csak szám karakterek és a + karakter szerepelhetnek!" << std::endl;
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
 		std::cin >> beolvas;
 	}
 	d->setEmberTelefonszam(Telefonszam(beolvas));
+
+	for(size_t i = 0; i < t.getEgyebAdatokSzama(); i++) {
+		system("CLS");
+		std::cout << "Az ember " << t.getEgyebAdatok(i)->getString() << ": " << std::endl;
+		std::cin >> beolvas;
+		size_t szamol = 0;
+		for(size_t j = 0; j < d->getMasAdatokElemszama(); j++) {
+			if(d->getMasAdatokAdata(j).getNev().getString() == t.getEgyebAdatok(i)->getString()) {
+				szamol++;
+				d->setMasAdatok(j, String(beolvas));
+			}
+		}
+		if (szamol == 0) {
+			StringPar sp = StringPar(t.getEgyebAdatok(i)->getString(), String(beolvas));
+			d->addMasAdatok(sp);
+		}
+	}
 
 	t.addEmber(d);
 	telefonkonyv_muveletek(t);
@@ -233,6 +250,23 @@ void maganember_hozzaadasa(Telefonkonyv t) {
 		std::cin >> beolvas;
 	}
 	m->setEmberTelefonszam(Telefonszam(beolvas));
+
+	for (size_t i = 0; i < t.getEgyebAdatokSzama(); i++) {
+		system("CLS");
+		std::cout << "Az ember " << t.getEgyebAdatok(i)->getString() << ": " << std::endl;
+		std::cin >> beolvas;
+		size_t szamol = 0;
+		for (size_t j = 0; j < m->getMasAdatokElemszama(); j++) {
+			if (m->getMasAdatokAdata(j).getNev().getString() == t.getEgyebAdatok(i)->getString()) {
+				szamol++;
+				m->setMasAdatok(j, String(beolvas));
+			}
+		}
+		if (szamol == 0) {
+			StringPar sp = StringPar(t.getEgyebAdatok(i)->getString(), String(beolvas));
+			m->addMasAdatok(sp);
+		}
+	}
 
 	t.addEmber(m);
 	telefonkonyv_muveletek(t);
@@ -342,6 +376,23 @@ void ember_modositasa(Telefonkonyv t) {
 			}
 			e->setEmberTelefonszam(Telefonszam(beolvas));
 
+			for (size_t i = 0; i < t.getEgyebAdatokSzama(); i++) {
+				system("CLS");
+				std::cout << "Az ember " << t.getEgyebAdatok(i)->getString() << ": " << std::endl;
+				std::cin >> beolvas;
+				size_t szamol = 0;
+				for (size_t j = 0; j < e->getMasAdatokElemszama(); j++) {
+					if (e->getMasAdatokAdata(j).getNev().getString() == t.getEgyebAdatok(i)->getString()) {
+						szamol++;
+						e->setMasAdatok(j, String(beolvas));
+					}
+				}
+				if (szamol == 0) {
+					StringPar sp = StringPar(t.getEgyebAdatok(i)->getString(), String(beolvas));
+					e->addMasAdatok(sp);
+				}
+			}
+
 			system("CLS");
 			std::cout << regi_nev << " új adatai:" << std::endl;
 			e->kiir();
@@ -358,12 +409,12 @@ void adat_felvetele(Telefonkonyv t) {
 	std::cout << "Mi legyen az extra adat neve?" << std::endl;
 	std::cout << "Extra adat neve: ";
 	char* beolvas = new char[0];
-	StringPar sp = StringPar();
 	std::cin >> beolvas;
 	if (String(beolvas) == "1") {}
-	else { sp.setNev(beolvas); }
-
-	//Ember::addMasAdatok(sp); -> TODO...
+	else {
+		String* s = new String(beolvas);
+		t.addEgyebAdat(s);
+	}
 
 	telefonkonyv_muveletek(t);
 }
