@@ -26,7 +26,7 @@ void teszt() {
 		EXPECT_NO_THROW(szamok.remove(0));
 	} END
 
-		TEST(Vektor, operator[]) {
+	TEST(Vektor, operator[]) {
 		Vektor<int> szamok;
 		szamok.add(1);
 		szamok.add(2);
@@ -42,8 +42,8 @@ void teszt() {
 		EXPECT_EQ("c", masSzamok[2]);
 	} END
 
-		//String tesztek
-		TEST(String, Konstruktorok Getterek) {
+	//String tesztek
+	TEST(String, Konstruktorok Getterek) {
 		String s = String();
 		EXPECT_EQ(0, s.getHossz());
 		String s2 = String("Teszt");
@@ -57,14 +57,14 @@ void teszt() {
 		EXPECT_TRUE(s2 == s2);
 	} END
 
-		TEST(String, operator[]) {
+	TEST(String, operator[]) {
 		String s = String("Teszt");
 		EXPECT_EQ('T', s[0]);
 		EXPECT_THROW(s[-1], std::exception);
 		EXPECT_THROW(s[5], std::exception);
 	} END
 
-		TEST(String, VanESzam lehetETelefonszam) {
+	TEST(String, VanESzam lehetETelefonszam) {
 		String s = String("Teszt");
 		EXPECT_FALSE(s.vanESzam());
 		s = "T3szt";
@@ -76,15 +76,22 @@ void teszt() {
 		EXPECT_TRUE(s.lehetETelefonszam());
 	} END
 
-		TEST(String, Operator << ) {
+	TEST(String, Operator<< ) {
 		String s = String("Teszt");
 		std::stringstream a;
 		a << s;
 		EXPECT_STREQ("Teszt", a.str().c_str());
 	} END
 
-		//StringPar tesztek
-		TEST(StringPar, Konstruktorok Getterek) {
+	TEST(String, Operator+) {
+		String s = String("Teszt");
+		s += 'd';
+		s += '3';
+		EXPECT_STREQ("Tesztd3", s.getString());
+	} END
+
+	//StringPar tesztek
+	TEST(StringPar, Konstruktorok Getterek) {
 		StringPar s = StringPar();
 		EXPECT_STREQ("", s.getNev().getString());
 		EXPECT_STREQ("", s.getAdat().getString());
@@ -93,7 +100,7 @@ void teszt() {
 		EXPECT_STREQ("TesztAdat", s1.getAdat().getString());
 	} END
 
-		TEST(StringPar, operator== Setterek) {
+	TEST(StringPar, operator== Setterek) {
 		StringPar s = StringPar();
 		StringPar s1 = StringPar("TesztNev", "TesztAdat");
 		EXPECT_FALSE(s == s1.getAdat());
@@ -104,8 +111,8 @@ void teszt() {
 		EXPECT_TRUE(s1 == s.getAdat());
 	} END
 
-		//Telefonszam tesztek
-		TEST(Telefonszam, Konstruktorok Getterek Setterek operator=) {
+	//Telefonszam tesztek
+	TEST(Telefonszam, Konstruktorok Getterek Setterek operator=) {
 		Telefonszam t = Telefonszam();
 		EXPECT_STREQ("", t.getTelefonszam().getString());
 		Telefonszam t1 = Telefonszam("+36 99 999 9999");
@@ -116,8 +123,8 @@ void teszt() {
 		EXPECT_STREQ("+36", t1.getTelefonszam().getString());
 	} END
 
-		//Ember (Munkas és Dolgozo) tesztek
-		TEST(Ember, Konstruktorok Getterek Setterek operator=) {
+	//Ember (Munkas és Dolgozo) tesztek
+	TEST(Ember, Konstruktorok Getterek Setterek operator=) {
 		Maganember e1 = Maganember();
 		Dolgozo e2 = Dolgozo();
 		EXPECT_STREQ("", e1.getNev().getString());
@@ -173,9 +180,8 @@ void teszt() {
 		EXPECT_STREQ("TesztCim1", t.getEmber("T")->getCim().getString());
 		EXPECT_STREQ("Te", t.getEmber("Te")->getNev().getString());
 		EXPECT_STREQ("TesztCim2", t.getEmber("Te")->getCim().getString());
-		EXPECT_STREQ("", t.getEmber("TesztNev")->getCim().getString());
 		t.removeEmber("T");
-		EXPECT_STREQ("", t.getEmber("T")->getCim().getString());
+		EXPECT_STREQ("TesztCim2", t.getEmber(0)->getCim().getString());
 		//t.kiir(); -> tesztelve main.cpp-ben - SIKERES
 	} END
 }

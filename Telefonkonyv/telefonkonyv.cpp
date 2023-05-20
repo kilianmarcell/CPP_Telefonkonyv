@@ -12,7 +12,7 @@ Ember* Telefonkonyv::getEmber(const String& nev) {
 void Telefonkonyv::kiir() {
 	std::cout << "Név" << '\t' << "Becenév" << '\t' << "Cím" << '\t' << "Telefonszám";
 	for (size_t i = 0; i < egyebAdatok.getElemekSzama(); i++) {
-		std::cout << '\t' << egyebAdatok[i];
+		std::cout << '\t' << egyebAdatok[i]->getString();
 	}
 	std::cout << std::endl;
 	for (size_t i = 0; i < emberek.getElemekSzama(); i++) {

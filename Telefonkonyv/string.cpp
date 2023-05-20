@@ -1,6 +1,13 @@
 #include <iostream>
 #include "string.h"
 
+String::String(char karakter) {
+    hossz = 1;
+    szoveg = new char[hossz+ 1];
+    szoveg[0] = karakter;
+    szoveg[1] = '\0';
+}
+
 String::String(const char* str) {
     size_t strHossz = 0;
     const char* s = str;
@@ -92,7 +99,45 @@ bool String::lehetETelefonszam() {
     return true;
 }
 
+String& String::operator+=(char karakter) {
+    String temp = String(szoveg);
+    delete[] szoveg;
+    hossz = hossz + 1;
+
+    szoveg = new char[hossz + 1];
+    if (hossz == 1) {
+        szoveg[0] = karakter; szoveg[1] = '\0';
+    } else {
+        for (size_t i = 0; i < temp.hossz; i++) {
+            szoveg[i] = temp.szoveg[i];
+        }
+        szoveg[hossz - 1] = karakter;
+        szoveg[hossz] = '\0';
+    }
+
+    return *this;
+}
+
 std::ostream& operator<<(std::ostream& os, const String& str) {
     os << str.getString();
     return os;
+}
+
+std::istream& operator>>(std::istream& is, String& str) {
+    unsigned char ch;
+    str = String("");
+    std::ios_base::fmtflags fl = is.flags();
+    is.setf(std::ios_base::skipws);
+    while (is >> ch) {
+        is.unsetf(std::ios_base::skipws);
+        if (isspace(ch)) {
+            is.putback(ch);
+            break;
+        }
+        else {
+            str += ch;
+        }
+    }
+    is.setf(fl);
+    return is;
 }

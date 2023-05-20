@@ -8,6 +8,7 @@ class String { //Karaktersorozatok kezeléséhez
 	size_t hossz; //A karaktersorozat hossza (\0-t nem számoljuk bele)
 public:
 	String() :szoveg(0), hossz(0) {} //Egy üres karaktersorozatot hozunk létre
+	String(char karakter); //Egy bejövõ karaktert eltárolunk
 	String(const char* str); //Egy bejövõ karaktersorozatot eltárolunk
 	String(const String& str); //Egy másik String-bõl másolunk
 	~String() { delete[] szoveg; } //Felszabadítja a lefoglalt szoveg-et
@@ -20,8 +21,10 @@ public:
 	const char& operator[](size_t index) const; //Visszaadja az indexedik elemét a karaktertömbnek (const)
 	bool vanESzam(); //Megmondja, hogy szerepel-e szám a String-ben
 	bool lehetETelefonszam(); //Megmondja, hogy telefonszám lehet-e a String
+	String& operator+=(char karakter);
 };
 
 std::ostream& operator<<(std::ostream& os, const String& str); //Kiírásoknál a szoveget kell megjeleníteni
+std::istream& operator>>(std::istream& is, String& str); //Több szó beolvasásához kell
 
 #endif //STRING_H

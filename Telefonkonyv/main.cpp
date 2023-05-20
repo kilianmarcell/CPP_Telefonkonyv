@@ -60,7 +60,7 @@ Telefonkonyv menu() {
 		return telefonkonyv_betolt();
 		break;
 	}
-
+	return teleonkonyv_letrehoz();
 }
 
 void telefonkonyv_muveletek(Telefonkonyv t) {
@@ -136,12 +136,12 @@ void ember_hozzaadasa(Telefonkonyv t) {
 
 void dolgozo_hozzaadasa(Telefonkonyv t) {
 	Dolgozo* d = new Dolgozo();
-	char* beolvas = new char[0];
+	String beolvas = String();
 
 	system("CLS");
 	std::cout << "Az ember neve: ";
 	std::cin >> beolvas;
-	while (String(beolvas).vanESzam()) {
+	while (beolvas.vanESzam()) {
 		std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl;
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
@@ -152,7 +152,7 @@ void dolgozo_hozzaadasa(Telefonkonyv t) {
 	system("CLS");
 	std::cout << "Az ember beceneve: ";
 	std::cin >> beolvas;
-	while (String(beolvas).vanESzam()) {
+	while (beolvas.vanESzam()) {
 		std::cout << "Az ember becenevében nem szerepelhet szám karakter!" << std::endl;
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
@@ -163,7 +163,7 @@ void dolgozo_hozzaadasa(Telefonkonyv t) {
 	system("CLS");
 	std::cout << "Az ember címe: ";
 	std::cin >> beolvas;
-	while (!String(beolvas).vanESzam()) {
+	while (!beolvas.vanESzam()) {
 		std::cout << "Az ember címében szerepelnie kell szám karakternek!" << std::endl;
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
@@ -174,7 +174,7 @@ void dolgozo_hozzaadasa(Telefonkonyv t) {
 	system("CLS");
 	std::cout << "Az ember telefonszáma: ";
 	std::cin >> beolvas;
-	while(!String(beolvas).lehetETelefonszam()) {
+	while (!beolvas.lehetETelefonszam()) {
 		std::cout << "Az ember telefonszámában csak szám karakterek és a + karakter szerepelhetnek!" << std::endl;
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
@@ -182,19 +182,19 @@ void dolgozo_hozzaadasa(Telefonkonyv t) {
 	}
 	d->setEmberTelefonszam(Telefonszam(beolvas));
 
-	for(size_t i = 0; i < t.getEgyebAdatokSzama(); i++) {
+	for (size_t i = 0; i < t.getEgyebAdatokSzama(); i++) {
 		system("CLS");
 		std::cout << "Az ember " << t.getEgyebAdatok(i)->getString() << ": " << std::endl;
 		std::cin >> beolvas;
 		size_t szamol = 0;
-		for(size_t j = 0; j < d->getMasAdatokElemszama(); j++) {
-			if(d->getMasAdatokAdata(j).getNev().getString() == t.getEgyebAdatok(i)->getString()) {
+		for (size_t j = 0; j < d->getMasAdatokElemszama(); j++) {
+			if (d->getMasAdatokAdata(j).getNev().getString() == t.getEgyebAdatok(i)->getString()) {
 				szamol++;
-				d->setMasAdatok(j, String(beolvas));
+				d->setMasAdatok(j, beolvas);
 			}
 		}
 		if (szamol == 0) {
-			StringPar sp = StringPar(t.getEgyebAdatok(i)->getString(), String(beolvas));
+			StringPar sp = StringPar(t.getEgyebAdatok(i)->getString(), beolvas);
 			d->addMasAdatok(sp);
 		}
 	}
@@ -205,12 +205,12 @@ void dolgozo_hozzaadasa(Telefonkonyv t) {
 
 void maganember_hozzaadasa(Telefonkonyv t) {
 	Maganember* m = new Maganember();
-	char* beolvas = new char[0];
+	String beolvas = String();
 
 	system("CLS");
 	std::cout << "Az ember neve: ";
 	std::cin >> beolvas;
-	while (String(beolvas).vanESzam()) {
+	while (beolvas.vanESzam()) {
 		std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl;
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
@@ -221,7 +221,7 @@ void maganember_hozzaadasa(Telefonkonyv t) {
 	system("CLS");
 	std::cout << "Az ember beceneve: ";
 	std::cin >> beolvas;
-	while (String(beolvas).vanESzam()) {
+	while (beolvas.vanESzam()) {
 		std::cout << "Az ember becenevében nem szerepelhet szám karakter!" << std::endl;
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
@@ -232,7 +232,7 @@ void maganember_hozzaadasa(Telefonkonyv t) {
 	system("CLS");
 	std::cout << "Az ember címe: ";
 	std::cin >> beolvas;
-	while (!String(beolvas).vanESzam()) {
+	while (!beolvas.vanESzam()) {
 		std::cout << "Az ember címében szerepelnie kell szám karakternek!" << std::endl;
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
@@ -278,17 +278,19 @@ void ember_eltavolitasa(Telefonkonyv t) {
 	if (darab == 0) {
 		std::cout << "A telefonkönyv üres!" << std::endl;
 		system("pause");
-	} else {
+	}
+	else {
 		std::cout << "1 - Vissza a menübe" << std::endl;
 		std::cout << "Adja meg az ember nevét, akit el szeretne távolítani a telefonkönyvbõl!" << std::endl;
-		char* beolvas = new char[0];
+		String beolvas = String();
 		std::cout << "Az ember neve: ";
 		std::cin >> beolvas;
 		t.removeEmber(beolvas);
 		while (darab == t.getEmberekSzama()) {
-			if (String(beolvas) == "1") {
+			if (beolvas == "1") {
 				darab = -1;
-			} else {
+			}
+			else {
 				std::cout << "Nincs ilyen nevû ember a telefonkönyvben!" << std::endl;
 				std::cout << "A telefonkönyvbõl egy ember neve: ";
 				std::cin >> beolvas;
@@ -313,11 +315,11 @@ void ember_modositasa(Telefonkonyv t) {
 	else {
 		std::cout << "1 - Vissza a menübe" << std::endl;
 		std::cout << "Adja meg az ember nevét, akinek az adatait módosítani szeretné a telefonkönyvbõl!" << std::endl;
-		char* beolvas = new char[0];
+		String beolvas = String();
 		std::cout << "Az ember neve: ";
 		std::cin >> beolvas;
 		while (t.getEmber(beolvas) == nullptr) {
-			if (String(beolvas) == "1") {
+			if (beolvas == "1") {
 				telefonkonyv_muveletek(t);
 				return;
 			}
@@ -333,9 +335,9 @@ void ember_modositasa(Telefonkonyv t) {
 			Ember* e = t.getEmber(beolvas);
 
 			system("CLS");
-			std::cout << regi_nev  << " új neve: ";
+			std::cout << regi_nev << " új neve: ";
 			std::cin >> beolvas;
-			while (String(beolvas).vanESzam()) {
+			while (beolvas.vanESzam()) {
 				std::cout << "Az ember nevében nem szerepelhet szám karakter!" << std::endl;
 				std::cin.clear();
 				std::cin.ignore(1000, '\n');
@@ -346,7 +348,7 @@ void ember_modositasa(Telefonkonyv t) {
 			system("CLS");
 			std::cout << regi_nev << " új beceneve: ";
 			std::cin >> beolvas;
-			while (String(beolvas).vanESzam()) {
+			while (beolvas.vanESzam()) {
 				std::cout << "Az ember becenevében nem szerepelhet szám karakter!" << std::endl;
 				std::cin.clear();
 				std::cin.ignore(1000, '\n');
@@ -357,7 +359,7 @@ void ember_modositasa(Telefonkonyv t) {
 			system("CLS");
 			std::cout << regi_nev << " új címe: ";
 			std::cin >> beolvas;
-			while (!String(beolvas).vanESzam()) {
+			while (!beolvas.vanESzam()) {
 				std::cout << "Az ember címében szerepelnie kell szám karakternek!" << std::endl;
 				std::cin.clear();
 				std::cin.ignore(1000, '\n');
@@ -368,7 +370,7 @@ void ember_modositasa(Telefonkonyv t) {
 			system("CLS");
 			std::cout << regi_nev << " új telefonszáma: ";
 			std::cin >> beolvas;
-			while (!String(beolvas).lehetETelefonszam()) {
+			while (!beolvas.lehetETelefonszam()) {
 				std::cout << "Az ember telefonszámában csak szám karakterek és a + karakter szerepelhetnek!" << std::endl;
 				std::cin.clear();
 				std::cin.ignore(1000, '\n');
@@ -384,11 +386,11 @@ void ember_modositasa(Telefonkonyv t) {
 				for (size_t j = 0; j < e->getMasAdatokElemszama(); j++) {
 					if (e->getMasAdatokAdata(j).getNev().getString() == t.getEgyebAdatok(i)->getString()) {
 						szamol++;
-						e->setMasAdatok(j, String(beolvas));
+						e->setMasAdatok(j, beolvas);
 					}
 				}
 				if (szamol == 0) {
-					StringPar sp = StringPar(t.getEgyebAdatok(i)->getString(), String(beolvas));
+					StringPar sp = StringPar(t.getEgyebAdatok(i)->getString(), beolvas);
 					e->addMasAdatok(sp);
 				}
 			}
@@ -402,15 +404,14 @@ void ember_modositasa(Telefonkonyv t) {
 	telefonkonyv_muveletek(t);
 }
 
-//TODO: befejezni
 void adat_felvetele(Telefonkonyv t) {
 	system("CLS");
 	std::cout << "1 - Vissza a menübe" << std::endl;
 	std::cout << "Mi legyen az extra adat neve?" << std::endl;
 	std::cout << "Extra adat neve: ";
-	char* beolvas = new char[0];
+	String beolvas = String();
 	std::cin >> beolvas;
-	if (String(beolvas) == "1") {}
+	if (beolvas == "1") {}
 	else {
 		String* s = new String(beolvas);
 		t.addEgyebAdat(s);
@@ -429,20 +430,21 @@ void ember_keresese(Telefonkonyv t) {
 	else {
 		std::cout << "1 - Vissza a menübe" << std::endl;
 		std::cout << "Adja meg az ember nevét, akit ki szeretne írni a telefonkönyvbõl!" << std::endl;
-		char* beolvas = new char[0];
+		String beolvas = String();
 		std::cout << "Az ember neve: ";
 		std::cin >> beolvas;
-		while(t.getEmber(beolvas) == nullptr) {
-			if(String(beolvas) == "1") {
+		while (t.getEmber(beolvas) == nullptr) {
+			if (beolvas == "1") {
 				telefonkonyv_muveletek(t);
 				return;
-			} else {
+			}
+			else {
 				std::cout << "Nincs ilyen nevû ember a telefonkönyvben!" << std::endl;
 				std::cout << "A telefonkönyvbõl egy ember neve: ";
 				std::cin >> beolvas;
 			}
 		}
-		if(darab > 0) {
+		if (darab > 0) {
 			t.getEmber(beolvas)->kiir();
 			system("pause");
 		}
