@@ -87,23 +87,23 @@ Telefonkonyv telefonkonyv_betolt() {
 	char karakter = ' ';
 	std::fstream fajl(beolvas.getString(), std::fstream::in);
 	String szo = String("");
-	size_t sor = 0;
+	size_t sor = -1;
 	size_t adat = 0;
 	while (fajl >> std::noskipws >> karakter) {
-		if (sor == 0) {
+		if (sor == -1) {
 			if (karakter != '\t' && karakter != '\n') {
 				szo += karakter;
 			}
 			if (karakter == '\t' || karakter == '\n') {
 				adat++;
-				if (sor == 0 && adat > 4) {
+				if (sor == -1 && adat > 4) {
 					String* egyebAdat = new String(szo);
 					t.addEgyebAdat(egyebAdat);
 				}
 				szo = "";
 			}
 			if (karakter == '\n') {
-				sor = 1;
+				sor = 0;
 				adat = 0;
 			}
 		} else {
@@ -112,13 +112,29 @@ Telefonkonyv telefonkonyv_betolt() {
 			}
 			if (karakter == '\t' || karakter == '\n') {
 				adat++;
-				if (sor == 0 && adat > 4) {
-					String* egyebAdat = new String(szo);
-					t.addEgyebAdat(egyebAdat);
+				if (karakter == '\t' && adat == 1) {
+					if (szo == "Dolgozo") {
+						Dolgozo* d = new Dolgozo();
+						t.addEmber(d);
+					}
+					else if (szo == "Maganember") {
+						Maganember* m = new Maganember();
+						t.addEmber(m);
+					}
+				} else if (karakter == '\t' && adat == 2) t.getEmber(sor)->setNev(szo);
+				else if (karakter == '\t' && adat == 3) t.getEmber(sor)->setBecenev(szo);
+				else if (karakter == '\t' && adat == 4) t.getEmber(sor)->setCim(szo);
+				else if (karakter == '\t' && adat == 5) t.getEmber(sor)->setEmberTelefonszam(Telefonszam(szo));
+				else if (karakter == '\t' && adat > 5) {
+					StringPar sp = StringPar(t.getEgyebAdatok((adat - 6))->getString(), szo);
+					t.getEmber(sor)->addMasAdatok(sp);
 				}
 				szo = "";
 			}
-			if (karakter == '\n') adat = 0;
+			if (karakter == '\n') {
+				adat = 0;
+				sor++;
+			}
 		}
 	}
 	std::cout << "A fájl sikeresen beolvasva!" << std::endl;
