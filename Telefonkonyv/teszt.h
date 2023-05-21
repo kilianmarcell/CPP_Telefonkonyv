@@ -158,21 +158,21 @@ void teszt() {
 		e2.setEmberTelefonszam(Telefonszam(String("123a456")));
 		EXPECT_STREQ("+36 99 999 9999", e1.getEmberTelefonszam().getString());
 		EXPECT_STREQ("123456", e2.getEmberTelefonszam().getString());
-		StringPar sp = StringPar("TesztNev", "TesztAdat");
-		StringPar sp1 = StringPar("TesztNev1", "TesztAdat1");
+		StringPar* sp = new StringPar("TesztNev", "TesztAdat");
+		StringPar* sp1 = new StringPar("TesztNev1", "TesztAdat1");
 		e1.addMasAdatok(sp);
 		EXPECT_EQ(1, e1.getMasAdatokElemszama());
 		e1.addMasAdatok(sp1);
 		EXPECT_EQ(2, e1.getMasAdatokElemszama());
-		EXPECT_STREQ("TesztNev", e1.getMasAdatokAdata(0).getNev().getString());
-		EXPECT_STREQ("TesztNev1", e1.getMasAdatokAdata(1).getNev().getString());
-		EXPECT_STREQ("TesztAdat", e1.getMasAdatokAdata(0).getAdat().getString());
-		EXPECT_STREQ("TesztAdat1", e1.getMasAdatokAdata(1).getAdat().getString());
+		EXPECT_STREQ("TesztNev", e1.getMasAdatokAdata(0)->getNev().getString());
+		EXPECT_STREQ("TesztNev1", e1.getMasAdatokAdata(1)->getNev().getString());
+		EXPECT_STREQ("TesztAdat", e1.getMasAdatokAdata(0)->getAdat().getString());
+		EXPECT_STREQ("TesztAdat1", e1.getMasAdatokAdata(1)->getAdat().getString());
 		e1.setMasAdatok(1, "TesztAdat2");
 		e1.removeMasAdatok(0);
 		EXPECT_EQ(1, e1.getMasAdatokElemszama());
-		EXPECT_STREQ("TesztNev1", e1.getMasAdatokAdata(0).getNev().getString());
-		EXPECT_STREQ("TesztAdat2", e1.getMasAdatokAdata(0).getAdat().getString());
+		EXPECT_STREQ("TesztNev1", e1.getMasAdatokAdata(0)->getNev().getString());
+		EXPECT_STREQ("TesztAdat2", e1.getMasAdatokAdata(0)->getAdat().getString());
 		//std::cout << e1 << std::endl; -> tesztelve main.cpp-ben - SIKERES
 		//std::cout << e2 << std::endl; -> tesztelve main.cpp-ben - SIKERES
 	} END
