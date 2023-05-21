@@ -9,7 +9,7 @@ class Telefonkonyv { //Telefonkönyvek létrehozásához
 	Vektor<String*> egyebAdatok; //Egyéb adatok megnevezéseit tárolja
 public:
 	Telefonkonyv() :emberek(), egyebAdatok() {} //Létrehoz egy üres telefonkönyvet, nincs benne egy Ember sem
-	Ember* getEmber(size_t index) { return emberek[index]; }; //Visszatér az indexedik ember objektum pointerével
+	Ember* getEmber(size_t index) { return emberek[index]; } //Visszatér az indexedik ember objektum pointerével
 	Ember* getEmber(const String& nev); //Visszatér a nev nevû ember objektum pointerével
 	size_t getEmberekSzama() { return emberek.getElemekSzama(); } //Visszaadja, hogy hány ember van a telefonkönyvben
 	String* getEgyebAdatok(size_t index) { return egyebAdatok[index]; } //Visszaadja az indexedik egyéb adat nevét

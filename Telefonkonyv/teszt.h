@@ -76,7 +76,7 @@ void teszt() {
 		EXPECT_TRUE(s.lehetETelefonszam());
 	} END
 
-	TEST(String, Operator<< ) {
+	TEST(String, Operator<<) {
 		String s = String("Teszt");
 		std::stringstream a;
 		a << s;

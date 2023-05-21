@@ -1,0 +1,9 @@
+Név	Becenév	Cím	Telefonszám	asd	nemigen	nem
+Maganember	b	a	1	1		igen	
+Maganember	asd	s	2	2			
+Maganember	dsa	dsadas	d2	213	asd		
+Maganember	c	nigen	n2	+32	123	321	fiu
+Dolgozo	d	e	f1	2	a	-	-
+Maganember	cs	jan	as23	31+	-	asd	dsa
+Maganember	nem	a	a2	2	a	a	3
+Dolgozo	a	a	a2	1	1	1	1

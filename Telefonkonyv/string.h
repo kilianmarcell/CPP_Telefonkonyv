@@ -21,10 +21,10 @@ public:
 	const char& operator[](size_t index) const; //Visszaadja az indexedik elemét a karaktertömbnek (const)
 	bool vanESzam(); //Megmondja, hogy szerepel-e szám a String-ben
 	bool lehetETelefonszam(); //Megmondja, hogy telefonszám lehet-e a String
-	String& operator+=(char karakter);
+	String& operator+=(char karakter); //A String-hez hozzáad egy karaktert a szoveg végére
 };
 
 std::ostream& operator<<(std::ostream& os, const String& str); //Kiírásoknál a szoveget kell megjeleníteni
-std::istream& operator>>(std::istream& is, String& str); //Több szó beolvasásához kell
+std::istream& operator>>(std::istream& is, String& str); //String-be beolvashatunk input adatot
 
 #endif //STRING_H
