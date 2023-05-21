@@ -25,7 +25,6 @@ void ember_letrehozasa(Telefonkonyv t, Ember* e);
 
 Telefonkonyv teleonkonyv_letrehoz() {
 	Telefonkonyv t = Telefonkonyv();
-	std::cout << "Telefonkönyv létrehozva" << std::endl;
 	return t;
 }
 
@@ -77,14 +76,25 @@ Telefonkonyv telefonkonyv_betolt() {
 	std::cout << "Telefonkönyv betöltése, kérem adja meg az elmentett telefonkönyv nevét!" << std::endl;
 	std::cout << "Telefonkönyv neve: ";
 	String beolvas = String();
+	std::fstream fajl;
 	std::cin >> beolvas;
 	beolvas += '.';
 	beolvas += 't';
 	beolvas += 'x';
 	beolvas += 't';
-
+	fajl.open(beolvas.getString());
+	if (fajl.fail()) std::cout << "Nincs ilyen nevû fájl!\nTelefonkönyv neve: " << std::endl;
+	while (fajl.fail()) {
+		std::cin >> beolvas;
+		beolvas += '.';
+		beolvas += 't';
+		beolvas += 'x';
+		beolvas += 't';
+		fajl.open(beolvas.getString());
+		if (fajl.fail()) std::cout << "Nincs ilyen nevû fájl!\nTelefonkönyv neve: ";
+		beolvas = "";
+	}
 	char karakter = ' ';
-	std::fstream fajl(beolvas.getString(), std::fstream::in);
 	String szo = String("");
 	size_t sor = -1;
 	size_t adat = 0;
