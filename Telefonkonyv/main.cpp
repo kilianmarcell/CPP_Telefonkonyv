@@ -100,7 +100,7 @@ Telefonkonyv telefonkonyv_betolt() {
 	size_t adat = 0;
 	while (fajl >> std::noskipws >> karakter) {
 		if (sor == -1) {
-			if (karakter != '\t' && karakter != '\n') {
+			if (karakter != '\t' && karakter != '\n' && karakter != '\r') {
 				szo += karakter;
 			}
 			if (karakter == '\t' || karakter == '\n') {
@@ -116,7 +116,7 @@ Telefonkonyv telefonkonyv_betolt() {
 				adat = 0;
 			}
 		} else {
-			if (karakter != '\t' && karakter != '\n') {
+			if (karakter != '\t' && karakter != '\n' && karakter != '\r') {
 				szo += karakter;
 			}
 			if (karakter == '\t' || karakter == '\n') {
