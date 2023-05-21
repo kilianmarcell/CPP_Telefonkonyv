@@ -175,6 +175,8 @@ void teszt() {
 		EXPECT_STREQ("TesztAdat2", e1.getMasAdatokAdata(0)->getAdat().getString());
 		//std::cout << e1 << std::endl; -> tesztelve main.cpp-ben - SIKERES
 		//std::cout << e2 << std::endl; -> tesztelve main.cpp-ben - SIKERES
+		delete sp;
+		delete sp1;
 	} END
 
 	//Telefonkonyv tesztek
