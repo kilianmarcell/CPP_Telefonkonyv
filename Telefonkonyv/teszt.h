@@ -137,59 +137,60 @@ void teszt() {
 
 	//Ember (Munkas és Dolgozo) tesztek
 	TEST(Ember, Konstruktorok Getterek Setterek operator=) {
-		Maganember e1 = Maganember();
-		Dolgozo e2 = Dolgozo();
-		EXPECT_STREQ("", e1.getNev().getString());
-		EXPECT_STREQ("", e1.getBecenev().getString());
-		EXPECT_STREQ("", e1.getCim().getString());
-		EXPECT_STREQ("", e2.getNev().getString());
-		EXPECT_STREQ("", e2.getBecenev().getString());
-		EXPECT_STREQ("", e2.getCim().getString());
-		e1.setNev("Teszt");
-		e2.setBecenev("Elek");
-		e2.setCim("Bp");
-		EXPECT_STREQ("", e2.getCim().getString());
-		e2.setCim("Bp 3");
-		EXPECT_STREQ("Teszt", e1.getNev().getString());
-		EXPECT_STREQ("Elek", e2.getBecenev().getString());
-		EXPECT_STREQ("Bp 3", e2.getCim().getString());
-		e1.setEmberTelefonszam(Telefonszam(String("+36 99 999 9999")));
-		e2.setEmberTelefonszam(Telefonszam(String("123456")));
-		e2.setEmberTelefonszam(Telefonszam(String("123a456")));
-		EXPECT_STREQ("+36 99 999 9999", e1.getEmberTelefonszam().getString());
-		EXPECT_STREQ("123456", e2.getEmberTelefonszam().getString());
+		Maganember* e1 = new Maganember();
+		Dolgozo* e2 = new Dolgozo();
+		EXPECT_STREQ("", e1->getNev().getString());
+		EXPECT_STREQ("", e1->getBecenev().getString());
+		EXPECT_STREQ("", e1->getCim().getString());
+		EXPECT_STREQ("", e2->getNev().getString());
+		EXPECT_STREQ("", e2->getBecenev().getString());
+		EXPECT_STREQ("", e2->getCim().getString());
+		e1->setNev("Teszt");
+		e2->setBecenev("Elek");
+		e2->setCim("Bp");
+		EXPECT_STREQ("", e2->getCim().getString());
+		e2->setCim("Bp 3");
+		EXPECT_STREQ("Teszt", e1->getNev().getString());
+		EXPECT_STREQ("Elek", e2->getBecenev().getString());
+		EXPECT_STREQ("Bp 3", e2->getCim().getString());
+		e1->setEmberTelefonszam(Telefonszam(String("+36 99 999 9999")));
+		e2->setEmberTelefonszam(Telefonszam(String("123456")));
+		e2->setEmberTelefonszam(Telefonszam(String("123a456")));
+		EXPECT_STREQ("+36 99 999 9999", e1->getEmberTelefonszam().getString());
+		EXPECT_STREQ("123456", e2->getEmberTelefonszam().getString());
 		StringPar* sp = new StringPar("TesztNev", "TesztAdat");
 		StringPar* sp1 = new StringPar("TesztNev1", "TesztAdat1");
-		e1.addMasAdatok(sp);
-		EXPECT_EQ(1, e1.getMasAdatokElemszama());
-		e1.addMasAdatok(sp1);
-		EXPECT_EQ(2, e1.getMasAdatokElemszama());
-		EXPECT_STREQ("TesztNev", e1.getMasAdatokAdata(0)->getNev().getString());
-		EXPECT_STREQ("TesztNev1", e1.getMasAdatokAdata(1)->getNev().getString());
-		EXPECT_STREQ("TesztAdat", e1.getMasAdatokAdata(0)->getAdat().getString());
-		EXPECT_STREQ("TesztAdat1", e1.getMasAdatokAdata(1)->getAdat().getString());
-		e1.setMasAdatok(1, "TesztAdat2");
-		e1.removeMasAdatok(0);
-		EXPECT_EQ(1, e1.getMasAdatokElemszama());
-		EXPECT_STREQ("TesztNev1", e1.getMasAdatokAdata(0)->getNev().getString());
-		EXPECT_STREQ("TesztAdat2", e1.getMasAdatokAdata(0)->getAdat().getString());
+		e1->addMasAdatok(sp);
+		EXPECT_EQ(1, e1->getMasAdatokElemszama());
+		e1->addMasAdatok(sp1);
+		EXPECT_EQ(2, e1->getMasAdatokElemszama());
+		EXPECT_STREQ("TesztNev", e1->getMasAdatokAdata(0)->getNev().getString());
+		EXPECT_STREQ("TesztNev1", e1->getMasAdatokAdata(1)->getNev().getString());
+		EXPECT_STREQ("TesztAdat", e1->getMasAdatokAdata(0)->getAdat().getString());
+		EXPECT_STREQ("TesztAdat1", e1->getMasAdatokAdata(1)->getAdat().getString());
+		e1->setMasAdatok(1, "TesztAdat2");
+		e1->removeMasAdatok(0);
+		EXPECT_EQ(1, e1->getMasAdatokElemszama());
+		EXPECT_STREQ("TesztNev1", e1->getMasAdatokAdata(0)->getNev().getString());
+		EXPECT_STREQ("TesztAdat2", e1->getMasAdatokAdata(0)->getAdat().getString());
+		delete sp; //Mivel az sp-t töröltük az e1 ember egyéb adatai közül, manuálisan kell felszabadítani
+		delete e1;
+		delete e2;
 		//std::cout << e1 << std::endl; -> tesztelve main.cpp-ben - SIKERES
 		//std::cout << e2 << std::endl; -> tesztelve main.cpp-ben - SIKERES
-		delete sp;
-		delete sp1;
 	} END
 
 	//Telefonkonyv tesztek
 	TEST(Telefonkonyv, Konstruktor Getter Setter) {
 		Telefonkonyv t = Telefonkonyv();
-		Maganember e1 = Maganember();
-		Dolgozo e2 = Dolgozo();
-		e1.setNev("T");
-		e2.setNev("Te");
-		e1.setCim("TesztCim1");
-		e2.setCim("TesztCim2");
-		t.addEmber(&e1);
-		t.addEmber(&e2);
+		Maganember* e1 = new Maganember();
+		Dolgozo* e2 = new Dolgozo();
+		e1->setNev("T");
+		e2->setNev("Te");
+		e1->setCim("TesztCim1");
+		e2->setCim("TesztCim2");
+		t.addEmber(e1);
+		t.addEmber(e2);
 		EXPECT_STREQ("T", t.getEmber("T")->getNev().getString());
 		EXPECT_STREQ("TesztCim1", t.getEmber("T")->getCim().getString());
 		EXPECT_STREQ("Te", t.getEmber("Te")->getNev().getString());

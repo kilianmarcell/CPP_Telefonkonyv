@@ -1,9 +1,6 @@
-Név	Becenév	Cím	Telefonszám	asd	nemigen	nem
-Maganember	b	a	1	1		igen	
-Maganember	asd	s	2	2			
-Maganember	dsa	dsadas	d2	213	asd		
-Maganember	c	nigen	n2	+32	123	321	fiu
-Dolgozo	d	e	f1	2	a	-	-
-Maganember	cs	jan	as23	31+	-	asd	dsa
-Maganember	nem	a	a2	2	a	a	3
-Dolgozo	a	a	a2	1	1	1	1
+Név	Becenév	Cím	Telefonszám	Nem	Eletkor
+Dolgozo	Csaba	Csabi	Nyaru130	+36309999999	fiu	29
+Maganember	Mate	Mate	Karolyu34	06207789201	fiu	14
+Maganember	Krisztina	Kriszti	Balazsutca4	+36301899234	lany	50
+Dolgozo	Andras	Andris	Bu11	067089132	fiu	52
+Maganember	Benjamin	Beni	Bkli99	+3630445623	fiu	19

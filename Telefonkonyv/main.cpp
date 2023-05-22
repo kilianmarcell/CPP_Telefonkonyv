@@ -532,7 +532,8 @@ void ember_keresese(Telefonkonyv& t) {
 }
 
 int main() {
-	//teszt();
+	//teszt(); //A teszteléshez
+
 	setlocale(LC_ALL, ""); //Az op rendszer által használt kódolót állítja be
 	Telefonkonyv t;
 	menu(t);
