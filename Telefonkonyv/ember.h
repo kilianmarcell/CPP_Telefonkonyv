@@ -7,7 +7,7 @@
 #include "telefonszam.h"
 
 class Ember { //Ember adatainak tárolásához
-	String nev; //Az ember nevét tárolja
+	String nev; //Az ember nevét tárolja, az ember neve egy szóból állhat
 	String becenev; //Becenevét
 	String cim; //Címét
 	Vektor<StringPar*> masAdatok; //Az egyéb adatokat, amiket hozzáadtunk itt tároljuk

@@ -9,6 +9,15 @@ Ember* Telefonkonyv::getEmber(const String& nev) {
 	return nullptr;
 }
 
+void Telefonkonyv::removeEmber(String nev) {
+	for (size_t i = 0; i < emberek.getElemekSzama(); i++) {
+		if (emberek[i]->getNev() == nev) {
+			delete emberek[i];
+			emberek.remove(i);
+		}
+	}
+}
+
 void Telefonkonyv::kiir() {
 	std::cout << "Név" << '\t' << "Becenév" << '\t' << "Cím" << '\t' << "Telefonszám";
 	for (size_t i = 0; i < egyebAdatok.getElemekSzama(); i++) {
@@ -18,4 +27,9 @@ void Telefonkonyv::kiir() {
 	for (size_t i = 0; i < emberek.getElemekSzama(); i++) {
 		std::cout << *emberek[i] << std::endl;
 	}
+}
+
+Telefonkonyv::~Telefonkonyv() {
+	for (size_t i = 0; i < emberek.getElemekSzama(); i++) delete emberek[i];
+	for (size_t i = 0; i < egyebAdatok.getElemekSzama(); i++) delete egyebAdatok[i];
 }

@@ -339,19 +339,21 @@ void ember_eltavolitasa(Telefonkonyv& t) {
 		String beolvas;
 		std::cout << "Az ember neve: ";
 		std::cin >> beolvas;
-		t.removeEmber(beolvas);
 		while (darab == t.getEmberekSzama()) {
 			if (beolvas == "1") {
 				darab = -1;
-			}
-			else {
-				std::cout << "Nincs ilyen nevû ember a telefonkönyvben!" << std::endl;
-				std::cout << "A telefonkönyvbõl egy ember neve: ";
-				std::cin >> beolvas;
-				t.removeEmber(beolvas);
+			} else {
+				if (t.getEmber(beolvas) == nullptr) {
+					std::cout << "Nincs ilyen nevû ember a telefonkönyvben!" << std::endl;
+					std::cout << "A telefonkönyvbõl egy ember neve: ";
+					std::cin >> beolvas;
+				} else {
+					t.removeEmber(beolvas);
+					darab = 0;
+				}
 			}
 		}
-		if (darab > -1) {
+		if (darab == 0) {
 			std::cout << beolvas << " sikeresen törölve lett a telefonkönyvbõl!" << std::endl;
 			system("pause");
 		}

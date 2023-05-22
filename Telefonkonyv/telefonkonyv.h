@@ -16,17 +16,10 @@ public:
 	size_t getEgyebAdatokSzama() { return egyebAdatok.getElemekSzama(); } //Visszaadja, hogy hány ember van a telefonkönyvben
 	void addEmber(Ember* ember) { emberek.add(ember); } //A telefonkönyvhöz egy ember-t adunk hozzá
 	void addEgyebAdat(String* nev) { egyebAdatok.add(nev); } //A telefonkönyvhöz egy új adatot adunk hozzá
-	void removeEmber(String nev) { for(size_t i = 0; i < emberek.getElemekSzama(); i++) if(emberek[i]->getNev() == nev) emberek.remove(i); } //Törli a nev nevû embert a telefonkönyvbõl
+	void removeEmber(String nev); //Törli a nev nevû embert a telefonkönyvbõl
 	void removeEgyebAdat(String* nev) { for (size_t i = 0; i < egyebAdatok.getElemekSzama(); i++) if (egyebAdatok[i] == nev) egyebAdatok.remove(i); } //Az egyéb adatok nev megnevezésû adatát eltávolítjuk
 	void kiir(); //Kiírja az összes ember adatait, az elsõ sorba az adattípusok szerepelnek
-	~Telefonkonyv() {
-		for (size_t i = 0; i < emberek.getElemekSzama(); i++) {
-			delete emberek[i];
-		}
-		for (size_t i = 0; i < egyebAdatok.getElemekSzama(); i++) {
-			delete egyebAdatok[i];
-		}
-	}
+	~Telefonkonyv();
 };
 
 #endif //TELEFONKONYV_H
