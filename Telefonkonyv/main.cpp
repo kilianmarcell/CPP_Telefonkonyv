@@ -1,4 +1,3 @@
-#include <Windows.h>
 #include <iostream>
 #include "memtrace.h"
 #include "string.h"
@@ -34,7 +33,7 @@ void telefonkonyv_mentes(Telefonkonyv& t) {
 		std::ofstream fajl(beolvas.getString());
 		if (fajl.is_open())
 		{
-			fajl << "Név" << '\t' << "Becenév" << '\t' << "Cím" << '\t' << "Telefonszám";
+			fajl << "Nev" << '\t' << "Becenev" << '\t' << "Cim" << '\t' << "Telefonszam";
 			for (size_t i = 0; i < t.getEgyebAdatokSzama(); i++) fajl << '\t' << t.getEgyebAdatok(i)->getString();
 			fajl << '\n';
 			for (size_t i = 0; i < t.getEmberekSzama(); i++) {
@@ -90,27 +89,27 @@ void telefonkonyv_betolt(Telefonkonyv& t) {
 	}
 	char karakter = ' ';
 	String szo = String("");
-	size_t sor = -1;
+	size_t elsosor = 1;
+	size_t sor = 0;
 	size_t adat = 0;
 	while (fajl >> std::noskipws >> karakter) {
-		if (sor == -1) {
+		if (elsosor == 1) {
 			if (karakter != '\t' && karakter != '\n' && karakter != '\r') {
 				szo += karakter;
 			}
 			if (karakter == '\t' || karakter == '\n') {
 				adat++;
-				if (sor == -1 && adat > 4) {
+				if (adat > 4) {
 					String* egyebAdat = new String(szo);
 					t.addEgyebAdat(egyebAdat);
 				}
 				szo = "";
 			}
 			if (karakter == '\n') {
-				sor = 0;
 				adat = 0;
+				elsosor = 0;
 			}
-		}
-		else {
+		} else {
 			if (karakter != '\t' && karakter != '\n' && karakter != '\r') {
 				szo += karakter;
 			}
@@ -532,9 +531,8 @@ void ember_keresese(Telefonkonyv& t) {
 }
 
 int main() {
-	//teszt(); //A teszteléshez
+	teszt(); //A teszteléshez
 
-	setlocale(LC_ALL, ""); //Az op rendszer által használt kódolót állítja be
-	Telefonkonyv t;
-	menu(t);
+	/*Telefonkonyv t;
+	menu(t);*/
 }
