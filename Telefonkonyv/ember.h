@@ -28,10 +28,8 @@ public:
 	void removeMasAdatok(size_t index) { masAdatok.remove(index); } //Az ember egyéb adatinak indexedik elemét eltávolítja
 	void kiir(); //Az ember adatait egymás alá kiírja, minden sorban megjelenítjük, hogy az ember melyik adattagja jelenik meg abban a sorban
 	virtual String getTipus() = 0; //Megadja, hogy magánember, vagy dolgozó ember a példány
-	~Ember() {
-		for (size_t i = 0; i < masAdatok.getElemekSzama(); i++) {
-			delete masAdatok[i];
-		}
+	virtual ~Ember() {
+		for (size_t i = 0; i < getMasAdatokElemszama(); i++) delete masAdatok[i];
 	}
 };
 
