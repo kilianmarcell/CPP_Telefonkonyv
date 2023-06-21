@@ -7,11 +7,13 @@ class Vektor { //Dinamikus memóriakezeléshez használjuk
 	size_t elemekSzama; //A T tömb elemszámát tárolja
 public:
 	Vektor() :elemekSzama(0) { adatok = new T[0]; } //Létrehoz egy üres tömböt, 0 elemszámmal
+	Vektor(const Vektor& _vektor) {} //A ctor-t letiltásához
 	size_t getElemekSzama() { return elemekSzama; } //Az elemek számát adja vissza
 	void add(const T& adat); //Egy T elemet adhatunk a tömbünkhöz
 	void remove(size_t index); //Egy elemet töröl a tömbünkbõl
 	T& operator[](size_t index); //A tömb egyik elemével tér vissza
 	const T& operator[](size_t index) const; //A tömb egyik elemével tér vissza (const)
+	Vektor& operator=(Vektor& _vektor) {} //Az op= letiltásához
 	~Vektor(); //Felszabadítja a dinamikusan foglalt adatok memóriát
 };
 

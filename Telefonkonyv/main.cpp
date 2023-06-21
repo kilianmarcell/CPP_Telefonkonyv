@@ -531,8 +531,9 @@ void ember_keresese(Telefonkonyv& t) {
 }
 
 int main() {
-	teszt(); //A teszteléshez
+	setlocale(LC_ALL, ""); //Jporta nem fogadja el, ha átállítjuk a kódolót
+	//teszt(); //A teszteléshez
 
-	/*Telefonkonyv t;
-	menu(t);*/
+	Telefonkonyv t;
+	menu(t);
 }
